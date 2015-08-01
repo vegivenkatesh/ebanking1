@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+ 		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd">
+
+	<context:component-scan base-package="org.banking">
+		<context:exclude-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+
+	<!-- <context:property-placeholder location="/application.conf" /> -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost:3306/test" />
+		<property name="username" value="root" />
+		<property name="password" value="" />
+	</bean>
+
+	<!-- dataSource <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" 
+		destroy-method="close"> <! DB connection properties <property name="driverClass" 
+		value="${db.driver:oracle.jdbc.OracleDriver}" /> <property name="jdbcUrl" 
+		value="${db.url}" /> <property name="user" value="${db.user:}" /> <property 
+		name="password" value="${db.password:}" /> <! Pool sizing properties <property 
+		name="initialPoolSize" value="${db.pool.initialSize:5}" /> <property name="maxPoolSize" 
+		value="${db.pool.maxSize:25}" /> <property name="minPoolSize" value="${db.pool.minSize:0}" 
+		/> <property name="maxStatements" value="${db.pool.maxStatements:10}" /> 
+		<! Connection testing and acquisition properties <property name="maxIdleTime" 
+		value="${db.con.maxIdleTime:300}" /> <property name="idleConnectionTestPeriod" 
+		value="${db.con.testPeriod:30}" /> <property name="preferredTestQuery" value="${db.con.testQuery:select 
+		1 from dual}" /> <property name="acquireIncrement" value="${db.con.acquireIncrement:5}" 
+		/> <property name="acquireRetryAttempts" value="${db.con.retryAttempts:0}" 
+		/> <property name="acquireRetryDelay" value="${db.con.retryDelay:3000}" /> 
+		<! JMX name <property name="dataSourceName" value="Datasource" /> -->
+
+	<bean id="sessionfactory" name="sessionfactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="annotatedClasses">
+			<list>
+				<value>org.banking.model.Customer</value>
+				<value>org.banking.model.AccountType</value>
+				<value>org.banking.model.Account</value>
+				<value>org.banking.model.Active</value>
+				<value>org.banking.model.Status</value>
+				<value>org.banking.model.TypeOfAccounts</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect
+				</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.hbm2ddl.auto">create</prop>
+				  <!--<prop key="hibernate.current_session_context_class">thread</prop>-->
+				
+			</props>
+		</property>
+		
+	</bean>
+	
+	<!-- <bean id="UserDao" class="com.elibrary.Dao.UserDao"> <property name="sessionfactory" 
+		ref="sessionfactory" /> </bean> -->
+	<!-- </bean> <! Debugging options <property name="unreturnedConnectionTimeout" 
+		value="${db.con.unreturnedTimeout:0}" /> <property name="debugUnreturnedConnectionStackTraces" 
+		value="${db.con.debugUnreturned:false}" /> </bean> -->
+
+	<!--<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"> 
+		<property name="dataSource" ref="dataSource" /> </bean> -->
+
+	<!-- <bean class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate" 
+		id="namedParamJdbcTemplate"> <constructor-arg name="dataSource" ref="dataSource" 
+		/> </bean> -->
+
+	<!--<bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate"> 
+		<property name="sessionFactory"> <ref bean="sessionFactory" /> </property> 
+		</bean> -->
+
+	<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"  />
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionfactory"> </property>
+	</bean>
+	
+	<bean id="coustomerDao" name="coustomerDao" class="org.banking.dao.CoustomerDao"> 
+		<property name="sesssionfactory" ref="sessionfactory"></property>
+	</bean>
+	
+	
+	
+</beans>
