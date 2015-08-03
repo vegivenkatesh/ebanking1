@@ -24,7 +24,7 @@ public class Account {
 	
     @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int accountNumber;
-	 @ManyToOne(targetEntity = Customer.class)
+	 @ManyToOne(optional=false)
 	    @JoinColumn(name = "customer_id",referencedColumnName="id",nullable=false)
 	private Customer customerid;
 	 
@@ -32,7 +32,7 @@ public class Account {
 	
 	
 	
-	@ManyToOne(targetEntity = AccountType.class)
+	@ManyToOne(optional=false)
 	    @JoinColumn(name = "account_type",referencedColumnName="ID",nullable=false)
 	private AccountType accountType;
 	@Column(name="Balance",nullable=false)

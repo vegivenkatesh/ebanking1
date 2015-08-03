@@ -2,19 +2,16 @@ package org.banking.service;
 
 import java.util.List;
 
-import org.banking.dao.CoustomerDao;
+import org.banking.dao.CrudInterface;
 import org.banking.model.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
-
 @Service
-public class Customerservice {
+public class Customerservice implements CrudService {
 	@Autowired
-	 CoustomerDao coustomerDao;
+	private CrudInterface coustomerDao;
 
-	
 	public void add(Customer customer) {
 		this.coustomerDao.saveOrupdate(customer);
 	}
@@ -24,7 +21,6 @@ public class Customerservice {
 
 	}
 
-	
 	public List<Customer> list() {
 		return this.coustomerDao.find();
 
@@ -34,10 +30,8 @@ public class Customerservice {
 		return null;
 	}
 
-	
 	public void remove(int b) {
 		this.coustomerDao.delete(b);
 	}
-
 
 }

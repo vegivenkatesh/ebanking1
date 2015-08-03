@@ -13,19 +13,16 @@
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
  		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd">
 
-	<context:component-scan base-package="org.banking">
-		<context:exclude-filter type="annotation"
-			expression="org.springframework.stereotype.Controller" />
-	</context:component-scan>
 
 	<!-- <context:property-placeholder location="/application.conf" /> -->
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
-		destroy-method="close">
+	<bean id="dataSource" name="dataSource"
+		class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="url" value="jdbc:mysql://localhost:3306/test" />
 		<property name="username" value="root" />
 		<property name="password" value="" />
 	</bean>
+
 
 	<!-- dataSource <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" 
 		destroy-method="close"> <! DB connection properties <property name="driverClass" 
@@ -43,7 +40,7 @@
 		/> <property name="acquireRetryDelay" value="${db.con.retryDelay:3000}" /> 
 		<! JMX name <property name="dataSourceName" value="Datasource" /> -->
 
-	<bean id="sessionfactory" name="sessionfactory"
+	<bean id="sessionfactory"
 		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="annotatedClasses">
@@ -51,9 +48,7 @@
 				<value>org.banking.model.Customer</value>
 				<value>org.banking.model.AccountType</value>
 				<value>org.banking.model.Account</value>
-				<value>org.banking.model.Active</value>
-				<value>org.banking.model.Status</value>
-				<value>org.banking.model.TypeOfAccounts</value>
+
 			</list>
 		</property>
 		<property name="hibernateProperties">
@@ -61,14 +56,17 @@
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect
 				</prop>
 				<prop key="hibernate.show_sql">true</prop>
+				<!--  
 				<prop key="hibernate.hbm2ddl.auto">create</prop>
-				  <!--<prop key="hibernate.current_session_context_class">thread</prop>-->
-				
+				-->
+				<!--<prop key="hibernate.current_session_context_class">thread</prop> -->
+
 			</props>
 		</property>
-		
+
 	</bean>
-	
+
+
 	<!-- <bean id="UserDao" class="com.elibrary.Dao.UserDao"> <property name="sessionfactory" 
 		ref="sessionfactory" /> </bean> -->
 	<!-- </bean> <! Debugging options <property name="unreturnedConnectionTimeout" 
@@ -86,16 +84,17 @@
 		<property name="sessionFactory"> <ref bean="sessionFactory" /> </property> 
 		</bean> -->
 
-	<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"  />
+	<tx:annotation-driven transaction-manager="transactionManager"
+		proxy-target-class="true" />
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
-		<property name="sessionFactory" ref="sessionfactory"> </property>
+		<property name="sessionFactory" ref="sessionfactory">
+		</property>
 	</bean>
-	
-	<bean id="coustomerDao" name="coustomerDao" class="org.banking.dao.CoustomerDao"> 
-		<property name="sesssionfactory" ref="sessionfactory"></property>
-	</bean>
-	
-	
-	
+
+	<context:component-scan base-package="org.banking">
+		<context:exclude-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+
 </beans>

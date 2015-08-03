@@ -1,0 +1,55 @@
+
+html
+{
+background-color:#232323;
+} 
+
+title {
+font-family: "arial";
+font-size:50px;
+}
+
+.loginform {
+	width: 300px;
+	margin: 50px auto;
+	padding: 25px;
+}
+
+.container {
+	padding: 25px;
+}
+
+#login_label{
+	padding: 25px;
+	font-family: "arial";
+	font-size:12px;
+	color:#e8e8e8; 
+}
+
+#input_usermail{
+	width: 300px;
+	height:20px;
+	font-family: "arial";
+	font-size:12px;
+	
+}
+
+#input_password{
+	width: 300px;
+	height:20px;
+	font-family: "arial";
+	font-size:12px;
+}
+
+#input_submit{
+	width: 25.5em; 
+	height: 2.8em; 
+	background-color:#db4a39; 
+	color:#e8e8e8; 
+	border-color:#db4a39;
+	border-style:solid;
+	border-radius:2px;
+	font-family: "arial";
+	font-size:12px;
+}
+
