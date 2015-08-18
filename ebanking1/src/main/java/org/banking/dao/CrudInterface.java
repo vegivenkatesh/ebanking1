@@ -2,12 +2,12 @@ package org.banking.dao;
 
 import java.util.List;
 
-import org.banking.model.Customer;
 
-public interface CrudInterface {
-	public void saveOrupdate(Customer customer);
-	public List<Customer> find();
+
+public interface CrudInterface<E> {
+	public void saveOrupdate(E e);
+	public List<E> find();
 	public void delete(int id);
-	public void edit(Customer customer);
+	public void edit(int b,E e);
 
 }

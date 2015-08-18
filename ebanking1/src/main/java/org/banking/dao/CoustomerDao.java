@@ -11,11 +11,14 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository
-public class CoustomerDao implements CrudInterface {
+public class CoustomerDao implements CustomerMark {
 	final static Logger logger = Logger.getLogger(CoustomerDao.class);
 
-	@Autowired
 	private SessionFactory sessionfactory;
+public void setSessionfactory(SessionFactory sessionfactory) {
+	this.sessionfactory = sessionfactory;
+}
+
 
 	@Override
 	@Transactional
@@ -31,7 +34,7 @@ public class CoustomerDao implements CrudInterface {
 	public List<Customer> find() {
 		Session session = this.sessionfactory.getCurrentSession();
 		@SuppressWarnings("unchecked")
-		List<Customer> customerlist = session.createQuery("from customer")
+		List<Customer> customerlist = session.createQuery("from Customer")
 				.list();
 		return customerlist;
 	}
@@ -49,21 +52,24 @@ public class CoustomerDao implements CrudInterface {
 
 	@Override
 	@Transactional
-	public void edit(Customer customer) {
+	public void edit(int id,Customer customer) {
 		// Retrieve session from Hibernate
 		Session session = this.sessionfactory.getCurrentSession();
 
-		// Retrieve existing person via id
-		Customer existingcustomer = (Customer) session.get(Customer.class,
-				customer.getcustomerId());
+		Customer existingcustomer = (Customer) session.load(Customer.class,
+				new Integer(id));
 		existingcustomer.setName(customer.getName());
 		existingcustomer.setAddress(customer.getAddress());
 		existingcustomer.setCity(customer.getCity());
 		existingcustomer.setCountry(customer.getCountry());
 		existingcustomer.setPhone(customer.getPhone());
-		session.save(existingcustomer);
+		session.saveOrUpdate(existingcustomer);
 		// Assign updated values to this person
 
 	}
-
+	
+		
+	
 }
+
+

@@ -2,13 +2,14 @@ package org.banking.service;
 
 import java.util.List;
 
-import org.banking.model.Customer;
 
-public interface CrudService {
-	public void add(Customer customer);
-	public void update(Customer customer);
-	public List<Customer> list();
-	public Customer getById(int b);
+
+public interface CrudService<G> {
+	public void add(G g);
+	public void update(int b,G g);
+	public List<G> list();
+	public G getById(int b);
 	public void remove(int b); 
+
 
 }

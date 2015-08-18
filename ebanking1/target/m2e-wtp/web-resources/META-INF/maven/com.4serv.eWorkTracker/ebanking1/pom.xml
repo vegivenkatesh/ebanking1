@@ -14,11 +14,15 @@
 		<servletapi.version>2.5</servletapi.version>
 		
 	</properties>
+	
+    
 	 <parent>
 		<groupId>com.4serv.eWorkTracker</groupId>
 		<artifactId>eWorkTracker-parent</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
+		   
 	</parent>
+	
 	
 	<artifactId>ebanking1</artifactId>
 	<name>eWorkTracker web  application</name>
@@ -89,6 +93,12 @@
     <artifactId>jackson-mapper-asl</artifactId>
     <version>1.9.12</version>
 </dependency>
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-cli</artifactId>
+	<version>1.1.6.RELEASE</version>
+</dependency>
+
 
 		<dependency>
 			<groupId>junit</groupId>
@@ -96,6 +106,11 @@
 			<version>4.7</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+    <groupId>org.webjars</groupId>
+    <artifactId>angularjs</artifactId>
+    <version>1.3.8</version>
+</dependency>
 
 		<!-- Compile -->
 	
@@ -112,11 +127,13 @@
 			<version>3.2.5.RELEASE</version>
 		</dependency>
 		<!-- joda-time -->
- <dependency>
+
+<dependency>
 	<groupId>joda-time</groupId>
-	<artifactId>joda-time</artifactId>
-	<version>2.8.1</version>
+	<artifactId>joda-time-hibernate</artifactId>
+	<version>1.4</version>
 </dependency>
+
 <!-- hibernate and database -->
  
     <dependency>
@@ -195,6 +212,14 @@
 	<artifactId>hibernate-validator</artifactId>
 	<version>5.1.3.Final</version>
   </dependency>
+  <dependency>
+    <groupId>com.thetransactioncompany</groupId>
+    <artifactId>cors-filter</artifactId>
+    <version>1.8</version>
+</dependency>
+
+  
+  
   
   
   

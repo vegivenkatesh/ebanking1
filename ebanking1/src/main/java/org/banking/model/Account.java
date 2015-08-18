@@ -1,10 +1,8 @@
 package org.banking.model;
 
-import java.util.Date;
-
+import java.io.Serializable;
 
 import javax.persistence.Column;
-
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -17,24 +15,29 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
+
 @Entity
 @Table(name="Account")
-public class Account {
+public class Account implements Serializable{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2309690787578132207L;
 	@Id
 	
     @GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="accountNumber")
 	private int accountNumber;
-	 @ManyToOne(optional=false)
-	    @JoinColumn(name = "customer_id",referencedColumnName="id",nullable=false)
+	 @OneToOne(optional=false)
+    @JoinColumn(name = "customerid",referencedColumnName="id",unique=true, nullable=false)
 	private Customer customerid;
-	 
-	
-	
-	
-	
-	@ManyToOne(optional=false)
-	    @JoinColumn(name = "account_type",referencedColumnName="ID",nullable=false)
+	 @ManyToOne
+	   @JoinColumn(name="ID")
 	private AccountType accountType;
+	 @ManyToOne
+	   @JoinColumn(name="customer1")
+	private Customer customer1;
 	@Column(name="Balance",nullable=false)
 	private int balance;
 	@Column(name="status",nullable=false)
@@ -43,17 +46,27 @@ public class Account {
 	@Column(name="active",nullable=false)
 	@Enumerated(EnumType.ORDINAL)
 	private Active active;
-	@Column(name="createDate",nullable=false)
-	private Date createdDate;
+	@Column(name="createdDate",nullable=false)
+
+	private  java.sql.Date createdDate;
+	
 	@OneToOne
-	@JoinColumn(name="createdname",referencedColumnName="name",nullable=false,insertable=false,updatable=false)
+	@JoinColumn(name="createdname",referencedColumnName="name",nullable=false,insertable=false,updatable=false,unique=true)
 	private Customer createdUser;
 	
 	@Column(name="ModifiedDate",nullable=false)
-	private Date modifiedDate;
+
+	private java.sql.Date modifiedDate;
 	@OneToOne
-	@JoinColumn(name="modifiedname",referencedColumnName="name",nullable=false)
+	@JoinColumn(name="modifiedname",referencedColumnName="name",nullable=false,unique=true)
 	private Customer modifiedUser;
+	
+	public Customer getCustomer() {
+		return customer1;
+	}
+	public void setCustomer(Customer customer) {
+		this.customer1 = customer;
+	}
 	public Customer getCustomerid() {
 		return customerid;
 	}
@@ -91,30 +104,42 @@ public class Account {
 	public void setActive(Active active) {
 		this.active = active;
 	}
-	public Date getCreatedDate() {
-		return createdDate;
-	}
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
+	
 	public Customer getCreatedUser() {
 		return createdUser;
 	}
 	public void setCreatedUser(Customer createdUser) {
 		this.createdUser = createdUser;
 	}
-	public Date getModifiedDate() {
-		return modifiedDate;
-	}
-	public void setModifiedDate(Date modifiedDate) {
-		this.modifiedDate = modifiedDate;
-	}
+	
+	
 	public Customer getModifiedUser() {
 		return modifiedUser;
 	}
 	public void setModifiedUser(Customer modifiedUser) {
 		this.modifiedUser = modifiedUser;
 	}
+	public Customer getCustomer1() {
+		return customer1;
+	}
+	public void setCustomer1(Customer customer1) {
+		this.customer1 = customer1;
+	}
+	public java.sql.Date getCreatedDate() {
+		return createdDate;
+	}
+	public void setCreatedDate(java.sql.Date createdDate) {
+		this.createdDate = createdDate;
+	}
+	public java.sql.Date getModifiedDate() {
+		return modifiedDate;
+	}
+	public void setModifiedDate(java.sql.Date modifiedDate) {
+		this.modifiedDate = modifiedDate;
+	}
+
+	
+
 	
 
 }

@@ -1,5 +1,6 @@
 package org.banking.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 
@@ -7,25 +8,41 @@ import java.util.List;
 
 
 
-import javax.persistence.Column;
 
+
+
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+
+
 
 
 @Entity
 @Table(name="customer")
-public class Customer {
+public class Customer implements Serializable {
 	
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7298450731342789863L;
 	@Id
 	@Column(name="id")
 	private int customerId;
 	@Column(name="name",nullable=false)
 	private String name;
 	@Column(name="Address",nullable=false)
+	
 	private String Address;
 	@Column(name="City",nullable=false)
 	private String City;
@@ -33,8 +50,13 @@ public class Customer {
 	private String Country;
 	@Column(name="Phone",nullable=false)
 	private String Phone;
-	@OneToMany(mappedBy="customerid")
+
+	@OneToMany(fetch=FetchType.EAGER,cascade = CascadeType.ALL,mappedBy="customer1")
+	//@JoinColumn(name = "account",referencedColumnName="accountNumber",unique=true, nullable=false)
+	
+	
 	private List<Account> account;
+	
 	public List<Account> getAccount() {
 		return account;
 	}

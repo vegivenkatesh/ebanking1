@@ -4,7 +4,8 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.banking.model.Customer;
-import org.banking.service.CrudService;
+import org.banking.service.CustomerMarker;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,9 +19,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class CustomerController {
 
 	@Autowired
-	private CrudService customerservice;
+	private CustomerMarker customerservice;
 
-	final static Logger logger = Logger.getLogger(CustomerController.class);
+	//final static Logger logger = Logger.getLogger(CustomerController.class);
 
 	@RequestMapping(method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
 	public void addCustomer(@RequestBody Customer customer) {
@@ -28,7 +29,7 @@ public class CustomerController {
 		customerservice.add(customer);
 	}
 
-	@RequestMapping(method = RequestMethod.GET, consumes = "application/json", produces = "application/json")
+	@RequestMapping(method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody List<Customer> getCustomerlist() {
 		List<Customer> customer = customerservice.list();
 		return customer;
@@ -40,15 +41,16 @@ public class CustomerController {
 
 	}
 
-	@RequestMapping(method = RequestMethod.GET)
-	public @ResponseBody String showMsg() {
-		return "CustomerController";
-	}
+//	@RequestMapping(method = RequestMethod.GET)
+	//public @ResponseBody String showMsg() {
+		//return "CustomerController";
+	//}
 
-	@RequestMapping(method = RequestMethod.PUT, consumes = "application/json", produces = "application/json", value = "/edit")
-	public void editCustomer(Customer customer) {
-		customerservice.update(customer);
+	@RequestMapping(method = RequestMethod.PUT, consumes = "application/json", produces = "application/json", value = "/edit/{id}")
+	public void editCustomer(@PathVariable("id") int id,Customer customer) {
+		customerservice.update(id,customer);
 
 	}
+	
 
 }
