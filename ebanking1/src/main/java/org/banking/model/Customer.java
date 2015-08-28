@@ -1,34 +1,21 @@
 package org.banking.model;
 
 import java.io.Serializable;
-import java.util.List;
-
-
-
-
-
-
-
-
-
-
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
+
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-
-
-
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 
 @Entity
 @Table(name="customer")
+@JsonAutoDetect(fieldVisibility = Visibility.ANY)
 public class Customer implements Serializable {
 	
 
@@ -37,70 +24,65 @@ public class Customer implements Serializable {
 	 */
 	private static final long serialVersionUID = -7298450731342789863L;
 	@Id
-	@Column(name="id")
+	@Column(name="id",nullable=false)
 	private int customerId;
-	@Column(name="name",nullable=false)
+	@Column(name="name")
 	private String name;
-	@Column(name="Address",nullable=false)
+	@Column(name="address")
 	
-	private String Address;
-	@Column(name="City",nullable=false)
-	private String City;
-	@Column(name="Country",nullable=false)
-	private String Country;
-	@Column(name="Phone",nullable=false)
-	private String Phone;
+	private String address;
+	@Column(name="city")
+	private String city;
+	@Column(name="country")
+	private String country;
+	@Column(name="phone")
+	private String phone;
 
-	@OneToMany(fetch=FetchType.EAGER,cascade = CascadeType.ALL,mappedBy="customer1")
+@OneToMany(targetEntity=Account.class,fetch=FetchType.EAGER,cascade = CascadeType.ALL,mappedBy="customer1")
+
+
+
+
 	//@JoinColumn(name = "account",referencedColumnName="accountNumber",unique=true, nullable=false)
-	
-	
-	private List<Account> account;
-	
-	public List<Account> getAccount() {
-		return account;
-	}
 
-	public void setAccount(List<Account> account) {
-		this.account = account;
-	}
-
+private Set<Account> account;
 	
-	public int getcustomerId() {
+	public int getCustomerId() {
 		return customerId;
 	}
-	public void setcustomerId(int customerId) {
+	public void setCustomerId(int customerId) {
 		this.customerId = customerId;
 	}
 	public String getName() {
 		return name;
 	}
-	public void setName(String name1) {
-		name = name1;
+	public void setName(String name) {
+		this.name = name;
 	}
 	public String getAddress() {
-		return Address;
+		return address;
 	}
 	public void setAddress(String address) {
-		Address = address;
+		this.address = address;
 	}
 	public String getCity() {
-		return City;
+		return city;
 	}
 	public void setCity(String city) {
-		City = city;
+		this.city = city;
 	}
 	public String getCountry() {
-		return Country;
+		return country;
 	}
 	public void setCountry(String country) {
-		Country = country;
+		this.country = country;
 	}
 	public String getPhone() {
-		return Phone;
+		return phone;
 	}
 	public void setPhone(String phone) {
-		Phone = phone;
+		this.phone = phone;
 	}
+
 
 }

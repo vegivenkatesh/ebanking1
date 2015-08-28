@@ -10,55 +10,49 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-
-
 @Entity
 @Table(name="Account")
 public class Account implements Serializable{
-	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 2309690787578132207L;
 	@Id
 	
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="accountNumber")
+	@Column(name="accountNumber",nullable=false)
 	private int accountNumber;
-	 @OneToOne(optional=false)
-    @JoinColumn(name = "customerid",referencedColumnName="id",unique=true, nullable=false)
-	private Customer customerid;
+	 
 	 @ManyToOne
-	   @JoinColumn(name="ID")
+	   @JoinColumn(name="Id")
 	private AccountType accountType;
 	 @ManyToOne
-	   @JoinColumn(name="customer1")
+	
+	   @JoinColumn(name="customerId")
 	private Customer customer1;
-	@Column(name="Balance",nullable=false)
+	@Column(name="Balance")
 	private int balance;
-	@Column(name="status",nullable=false)
+	@Column(name="status")
 	@Enumerated(EnumType.ORDINAL)
 	private Status status;
-	@Column(name="active",nullable=false)
+	@Column(name="active")
 	@Enumerated(EnumType.ORDINAL)
 	private Active active;
-	@Column(name="createdDate",nullable=false)
+	@Column(name="createdDate")
 
 	private  java.sql.Date createdDate;
 	
 	@OneToOne
-	@JoinColumn(name="createdname",referencedColumnName="name",nullable=false,insertable=false,updatable=false,unique=true)
+	@JoinColumn(name="createdname",referencedColumnName="name",insertable=false,updatable=false,unique=true)
 	private Customer createdUser;
 	
-	@Column(name="ModifiedDate",nullable=false)
+	@Column(name="ModifiedDate")
 
 	private java.sql.Date modifiedDate;
 	@OneToOne
-	@JoinColumn(name="modifiedname",referencedColumnName="name",nullable=false,unique=true)
+	@JoinColumn(name="modifiedname",referencedColumnName="name",unique=true)
 	private Customer modifiedUser;
 	
 	public Customer getCustomer() {
@@ -67,13 +61,6 @@ public class Account implements Serializable{
 	public void setCustomer(Customer customer) {
 		this.customer1 = customer;
 	}
-	public Customer getCustomerid() {
-		return customerid;
-	}
-	public void setCustomerid(Customer customerid) {
-		this.customerid = customerid;
-	}
-	
 	public int getAccountNumber() {
 		return accountNumber;
 	}

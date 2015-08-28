@@ -1,12 +1,9 @@
 package org.banking.dao;
 
 import java.util.List;
-
-import org.apache.log4j.Logger;
 import org.banking.model.Account;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 @Repository
@@ -58,8 +55,7 @@ public class AccountDao implements AccountMark {
 		Session session = this.sessionfactory.getCurrentSession();
 
 		// Retrieve existing person via id
-		Account existingaccount = (Account) session.load(Account.class,
-				new Integer(id));
+		Account existingaccount = (Account)session.load(Account.class,new Integer(id));
 		existingaccount.setAccountType(account.getAccountType());
 		existingaccount.setActive(account.getActive());
 		existingaccount.setBalance(account.getBalance());

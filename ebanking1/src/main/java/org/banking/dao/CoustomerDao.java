@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.banking.model.Customer;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,8 +34,10 @@ public void setSessionfactory(SessionFactory sessionfactory) {
 	public List<Customer> find() {
 		Session session = this.sessionfactory.getCurrentSession();
 		@SuppressWarnings("unchecked")
-		List<Customer> customerlist = session.createQuery("from Customer")
+		List<Customer> customerlist = session.createCriteria(Customer.class)
 				.list();
+		//List<Account> accountlist=session.createQuery("from Account");
+		//Hibernate.initialize(customerlist.getAccount);
 		return customerlist;
 	}
 
@@ -56,14 +58,15 @@ public void setSessionfactory(SessionFactory sessionfactory) {
 		// Retrieve session from Hibernate
 		Session session = this.sessionfactory.getCurrentSession();
 
-		Customer existingcustomer = (Customer) session.load(Customer.class,
+		Customer existingcustomer = (Customer) session.get(Customer.class,
 				new Integer(id));
-		existingcustomer.setName(customer.getName());
 		existingcustomer.setAddress(customer.getAddress());
 		existingcustomer.setCity(customer.getCity());
 		existingcustomer.setCountry(customer.getCountry());
+		//existingcustomer.setCustomerId(customer.getCustomerId());
+		existingcustomer.setName(customer.getName());
 		existingcustomer.setPhone(customer.getPhone());
-		session.saveOrUpdate(existingcustomer);
+		session.save(existingcustomer);
 		// Assign updated values to this person
 
 	}

@@ -20,9 +20,8 @@ public class AccountType {
 private	int Id;
 	@Column(name="typeOfaccount",nullable=false)
 private	TypeOfAccounts name;
-	@OneToMany
-	
-	private Set<Account> account;
+	@OneToMany(mappedBy="accountType")
+private Set<Account> account;
 	
 public Set<Account> getAccount() {
 		return account;

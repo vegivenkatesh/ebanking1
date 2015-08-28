@@ -1,19 +1,118 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Hello jQuery</title>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-        <script src="js/hello.js"></script>
-    </head>
+<!doctype html>
+<html ng-app="myApp">
+	<head>
+		<title>Hello AngularJS</title>
+		<link rel="stylesheet"
+	href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script
+	src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
+          <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
+		<script src="js/hello.js"></script>
+		<script src="js/customer.js"></script>
+	</head>
 
-    <body>
-        <div>
-            <p class="customers-customerId">The ID is </p>
-            <p class="customers-address">The content is </p>
-            <p class="customers-city">The content is </p>
-        </div>
-        <h4>Response headers:</h4>
-        <div class="response-headers">
-        </div>
-    </body>
+	<body ng-controller="customerController">
+		<div class="container">
+		<h1 class="pull-left">Students</h1>
+			<a class="btn btn-info pull-right" ng-click="newcustomer()">New Student</a>
+		
+		<table class="table">
+		<tr>
+		<th>S.No
+		</th>
+		<th>CUSTOMERID
+		</th>
+		<th>ADDRESS
+		</th>
+		<th>NAME
+		</th>
+		<th>CITY
+		</th>
+		<th>COUNTRY
+		</th>
+		<th>PHONE
+		</th>
+	</tr>
+		<tr ng-repeat="cust in customers">
+		<td>{{$index + 1}}</td>
+			<td>{{cust.customerId}}</td>
+			<td>{{cust.address}}</td>
+			<td>{{cust.name}}</td>
+			<td>{{cust.city}}</td>
+			<td>{{cust.country}}</td>
+			<td>{{cust.phone}}</td>
+			<td>
+							<a ng-click="editcustomers(cust)">Edit</a>
+							&nbsp;|&nbsp;
+							<div><a ng-click="deletecustomers(cust)">Delete</a></div>
+						</td>
+			</tr>
+		</table>
+		<div ng-show="enterNew">
+				<form>
+					<div class="row"><div class="span1">CUSTOMERID</div><div class="span4"><input type="text" class="input" ng-model="cust.customerId" /></div></div>
+					<div class="row"><div class="span1">ADDRESS</div><div class="span4"><input type="text" ng-model="cust.address" /></div></div>
+					<div class="row"><div class="span1">NAME</div><div class="span4"><input type="text" ng-model="cust.name" /></div></div>
+					<div class="row"><div class="span1">CITY</div><div class="span4"><input type="text" ng-model="cust.city" /></div></div>
+					<div class="row"><div class="span1">COUNTRY</div><div class="span4"><input type="text" ng-model="cust.country" /></div></div>
+					<div class="row"><div class="span1">PHONE</div><div class="span4"><input type="text" ng-model="cust.phone" /></div></div>
+					<div class="row"><div class="span5">
+						<input type="submit" class="btn btn-primary" value="Save" ng-click="createcustomer(cust)"/>
+						<a class="btn" ng-click="cancelSave()">Cancel</a>
+					</div></div>
+				</form>
+			</div>
+		<div ng-show="editing">
+				<form>
+					<div class="row">
+						<div class="span1">CUSTOMERID</div>
+						<div class="span4">
+							<input type="text" class="input" ng-model="cust.customerId" />
+						</div>
+					</div>
+					<div class="row">
+						<div class="span1">ADDRESS</div>
+						<div class="span4">
+							<input type="text" ng-model="cust.address" />
+						</div>
+					</div>
+					<div class="row">
+						<div class="span1">NAME</div>
+						<div class="span4">
+							<input type="text" ng-model="cust.name" />
+						</div>
+					</div>
+					<div class="row">
+						<div class="span1">CITY</div>
+						<div class="span4">
+							<input type="text" ng-model="cust.city" />
+						</div>
+					</div>
+					<div class="row">
+						<div class="span1">COUNTRY</div>
+						<div class="span4">
+							<input type="text" ng-model="cust.country" />
+						</div>
+					</div>
+					<div class="row">
+						<div class="span1">PHONE</div>
+						<div class="span4">
+							<input type="text" ng-model="cust.phone" />
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="span5">
+							<input type="submit" class="btn btn-primary" value="Save" ng-click="updatecustomers()"/>
+							<a class="btn" ng-click="cancelSave()">Cancel</a>
+						</div>
+					</div>
+				</form>
+			
+			</div>
+
+	</body>
 </html>
